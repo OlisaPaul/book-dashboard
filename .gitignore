@@ -27,3 +27,5 @@ Thumbs.db
 
 # Keep database file in repository (as per requirements)
 # database.sqlite is tracked
+
+TROUBLESHOOTING.md

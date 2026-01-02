@@ -39,6 +39,12 @@ book-dashboard/
 
 ## Getting Started
 
+### Quick Start
+
+**Already configured Auth0?** See [QUICK_START.md](./QUICK_START.md) for rapid setup.
+
+**First time?** Follow the detailed setup below.
+
 ### Prerequisites
 
 - Node.js (v18 or higher)
