@@ -76,26 +76,41 @@ export const DashboardPage: React.FC = () => {
 
   return (
     <Box minH="100vh" bg={bgColor} py={8}>
-      <Container maxW="container.xl">
-        <HStack justify="space-between" mb={8}>
+      <Container maxW="full" px={{ base: 4, md: 6, lg: 8 }}>
+        <HStack
+          justify="space-between"
+          mb={8}
+          flexWrap={{ base: "wrap", md: "nowrap" }}
+          gap={4}
+        >
           <Box>
-            <Heading size="xl">Book Dashboard</Heading>
-            <Text color="gray.600" mt={2}>
+            <Heading size={{ base: "lg", md: "xl" }}>Book Dashboard</Heading>
+            <Text color="gray.600" mt={2} fontSize={{ base: "sm", md: "md" }}>
               Welcome, {user?.name || user?.email}
             </Text>
           </Box>
-          <Button colorScheme="red" onClick={() => logout()}>
+          <Button
+            colorScheme="red"
+            onClick={() => logout()}
+            size={{ base: "sm", md: "md" }}
+          >
             Logout
           </Button>
         </HStack>
 
         <Box bg="white" rounded="lg" shadow="md" p={6}>
-          <HStack justify="space-between" mb={6}>
-            <Heading size="md">Books</Heading>
+          <HStack
+            justify="space-between"
+            mb={6}
+            flexWrap={{ base: "wrap", md: "nowrap" }}
+            gap={4}
+          >
+            <Heading size={{ base: "sm", md: "md" }}>Books</Heading>
             <Button
               leftIcon={<AddIcon />}
               colorScheme="blue"
               onClick={handleCreate}
+              size={{ base: "sm", md: "md" }}
             >
               Add Book
             </Button>
@@ -114,53 +129,55 @@ export const DashboardPage: React.FC = () => {
           )}
 
           {!loading && !error && (
-            <Table variant="simple">
-              <Thead>
-                <Tr>
-                  <Th>ID</Th>
-                  <Th>Name</Th>
-                  <Th>Description</Th>
-                  <Th>Actions</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {data?.books?.length === 0 ? (
+            <Box overflowX="auto">
+              <Table variant="simple" size={{ base: "sm", md: "md" }}>
+                <Thead>
                   <Tr>
-                    <Td colSpan={4} textAlign="center" py={10}>
-                      <Text color="gray.500">
-                        No books found. Create your first book!
-                      </Text>
-                    </Td>
+                    <Th>ID</Th>
+                    <Th>Name</Th>
+                    <Th>Description</Th>
+                    <Th>Actions</Th>
                   </Tr>
-                ) : (
-                  data?.books?.map((book: Book) => (
-                    <Tr key={book.id}>
-                      <Td>{book.id}</Td>
-                      <Td fontWeight="semibold">{book.name}</Td>
-                      <Td>{book.description}</Td>
-                      <Td>
-                        <HStack spacing={2}>
-                          <IconButton
-                            aria-label="Edit book"
-                            icon={<EditIcon />}
-                            size="sm"
-                            colorScheme="blue"
-                            onClick={() => handleEdit(book)}
-                          />
-                          <IconButton
-                            aria-label="Delete book"
-                            icon={<DeleteIcon />}
-                            size="sm"
-                            colorScheme="red"
-                            onClick={() => handleDelete(book.id)}
-                          />
-                        </HStack>
+                </Thead>
+                <Tbody>
+                  {data?.books?.length === 0 ? (
+                    <Tr>
+                      <Td colSpan={4} textAlign="center" py={10}>
+                        <Text color="gray.500">
+                          No books found. Create your first book!
+                        </Text>
                       </Td>
                     </Tr>
-                  ))
-                )}
-              </Tbody>
-            </Table>
+                  ) : (
+                    data?.books?.map((book: Book) => (
+                      <Tr key={book.id}>
+                        <Td>{book.id}</Td>
+                        <Td fontWeight="semibold">{book.name}</Td>
+                        <Td>{book.description}</Td>
+                        <Td>
+                          <HStack spacing={2}>
+                            <IconButton
+                              aria-label="Edit book"
+                              icon={<EditIcon />}
+                              size="sm"
+                              colorScheme="blue"
+                              onClick={() => handleEdit(book)}
+                            />
+                            <IconButton
+                              aria-label="Delete book"
+                              icon={<DeleteIcon />}
+                              size="sm"
+                              colorScheme="red"
+                              onClick={() => handleDelete(book.id)}
+                            />
+                          </HStack>
+                        </Td>
+                      </Tr>
+                    ))
+                  )}
+                </Tbody>
+              </Table>
+            </Box>
           )}
         </Box>
       </Container>
