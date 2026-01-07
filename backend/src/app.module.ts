@@ -18,7 +18,8 @@ import { Book } from './books/book.entity';
       driver: ApolloDriver,
       autoSchemaFile: true,
       playground: true,
-      context: ({ req, res }) => ({ req, res }),
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      context: ({ req, res }: { req: any; res: any }) => ({ req, res }),
     }),
     TypeOrmModule.forRoot({
       type: 'sqlite',

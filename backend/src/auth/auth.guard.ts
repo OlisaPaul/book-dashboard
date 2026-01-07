@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { auth } from 'express-oauth2-jwt-bearer';
-import { promisify } from 'util';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -24,11 +23,15 @@ export class AuthGuard implements CanActivate {
     const ctx = GqlExecutionContext.create(context);
     const { req, res } = ctx.getContext();
 
-    try {
-      await promisify(this.checkJwt)(req, res);
-      return true;
-    } catch (error) {
-      throw new UnauthorizedException('Invalid or missing token');
-    }
+    return new Promise((resolve, reject) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      this.checkJwt(req, res, (err: any) => {
+        if (err) {
+          reject(new UnauthorizedException('Invalid or missing token'));
+        } else {
+          resolve(true);
+        }
+      });
+    });
   }
 }

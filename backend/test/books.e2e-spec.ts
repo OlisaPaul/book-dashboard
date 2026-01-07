@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { AppModule } from '../src/app.module';
-import * as request from 'supertest';
+import request from 'supertest';
 
 describe('Books GraphQL (e2e)', () => {
   let app: INestApplication;
@@ -24,7 +24,7 @@ describe('Books GraphQL (e2e)', () => {
   });
 
   describe('books query', () => {
-    it('should return unauthorized without token', () => {
+    it('should return unauthorized without token', async () => {
       return request(app.getHttpServer())
         .post('/graphql')
         .send({
@@ -32,13 +32,15 @@ describe('Books GraphQL (e2e)', () => {
         })
         .expect(200)
         .expect((res) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           expect(res.body.errors).toBeDefined();
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           expect(res.body.errors[0].extensions.code).toBe('UNAUTHENTICATED');
         });
     });
 
     // Note: This test would require a valid Auth0 token or mocking the AuthGuard
-    it.skip('should return books with valid token', () => {
+    it.skip('should return books with valid token', async () => {
       return request(app.getHttpServer())
         .post('/graphql')
         .set('Authorization', `Bearer ${mockToken}`)
@@ -47,14 +49,16 @@ describe('Books GraphQL (e2e)', () => {
         })
         .expect(200)
         .expect((res) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           expect(res.body.data.books).toBeDefined();
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           expect(Array.isArray(res.body.data.books)).toBe(true);
         });
     });
   });
 
   describe('createBook mutation', () => {
-    it('should return unauthorized without token', () => {
+    it('should return unauthorized without token', async () => {
       return request(app.getHttpServer())
         .post('/graphql')
         .send({
@@ -70,14 +74,16 @@ describe('Books GraphQL (e2e)', () => {
         })
         .expect(200)
         .expect((res) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           expect(res.body.errors).toBeDefined();
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           expect(res.body.errors[0].extensions.code).toBe('UNAUTHENTICATED');
         });
     });
   });
 
   describe('updateBook mutation', () => {
-    it('should return unauthorized without token', () => {
+    it('should return unauthorized without token', async () => {
       return request(app.getHttpServer())
         .post('/graphql')
         .send({
@@ -93,14 +99,16 @@ describe('Books GraphQL (e2e)', () => {
         })
         .expect(200)
         .expect((res) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           expect(res.body.errors).toBeDefined();
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           expect(res.body.errors[0].extensions.code).toBe('UNAUTHENTICATED');
         });
     });
   });
 
   describe('deleteBook mutation', () => {
-    it('should return unauthorized without token', () => {
+    it('should return unauthorized without token', async () => {
       return request(app.getHttpServer())
         .post('/graphql')
         .send({
@@ -112,7 +120,9 @@ describe('Books GraphQL (e2e)', () => {
         })
         .expect(200)
         .expect((res) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           expect(res.body.errors).toBeDefined();
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           expect(res.body.errors[0].extensions.code).toBe('UNAUTHENTICATED');
         });
     });
